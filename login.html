@@ -11,12 +11,14 @@
             <h1>LOGIN</h1>
         </div>
         
-        <form class="login-form">
+        <div id="errorMessage" class="error-message">Invalid username or password</div>
+        
+        <form class="login-form" id="loginForm">
             <div class="form-group">
-                <input type="email" placeholder="Email" required>
+                <input type="text" id="username" placeholder="Username" required>
             </div>
             <div class="form-group">
-                <input type="password" placeholder="Password" required>
+                <input type="password" id="password" placeholder="Password" required>
             </div>
             
             <div class="remember-me">
@@ -44,5 +46,28 @@
             Not a member? <a href="#">Sign up now</a>
         </div>
     </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+            
+            
+            if (username === 'bob' && password === 'bobpass') {
+                
+                errorMessage.style.display = 'none';
+              //  alert('Login successful! Redirecting...');
+                 window.location.href = "index.html"; 
+            } else {
+               
+                errorMessage.style.display = 'block';
+            }
+        });
+    </script>
 </body>
+
+
 </html>
