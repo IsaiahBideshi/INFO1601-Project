@@ -4,18 +4,45 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<link rel="stylesheet" href="login.css">
 <body>
-<main>
-    <h1>Login</h1>
-    <form action="/login" method="POST">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-        <button type="submit">Login</button>
-    </form>
-</main>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>LOGIN</h1>
+        </div>
+        
+        <form class="login-form">
+            <div class="form-group">
+                <input type="email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <input type="password" placeholder="Password" required>
+            </div>
+            
+            <div class="remember-me">
+                <input type="checkbox" id="remember">
+                <label for="remember">Remember me</label>
+            </div>
+            
+            <button type="submit" class="login-btn">LOGIN</button>
+        </form>
+        
+        <div class="divider">Or login with</div>
+        
+        <div class="social-login">
+            <button type="button" class="social-btn facebook-btn">
+                <i class="fab fa-facebook-f"></i>
+                Facebook
+            </button>
+            <button type="button" class="social-btn google-btn">
+                <i class="fab fa-google"></i>
+                Google
+            </button>
+        </div>
+        
+        <div class="signup-link">
+            Not a member? <a href="#">Sign up now</a>
+        </div>
+    </div>
 </body>
 </html>
