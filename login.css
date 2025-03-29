@@ -37,8 +37,7 @@ body {
     margin-bottom: 20px;
 }
 
-.login-form input[type="email"],
-.login-form input[type="password"] {
+.login-form input {
     width: 100%;
     padding: 12px 15px;
     border: 1px solid #ddd;
@@ -47,8 +46,7 @@ body {
     transition: border-color 0.3s;
 }
 
-.login-form input[type="email"]:focus,
-.login-form input[type="password"]:focus {
+.login-form input:focus {
     border-color: #4a90e2;
     outline: none;
 }
@@ -148,4 +146,11 @@ body {
 
 .signup-link a:hover {
     text-decoration: underline;
+}
+
+.error-message {
+    color: #e74c3c;
+    text-align: center;
+    margin-bottom: 15px;
+    display: none;
 }
