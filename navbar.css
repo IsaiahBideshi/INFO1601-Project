@@ -1,0 +1,59 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    font-family: Dosis;
+    margin: 0;
+    background-color: gainsboro;
+}
+nav {
+    background-color: #060606;
+    color: white;
+    padding: 10px;
+    display: flex;
+    padding-left: 20vw;
+    padding-right: 20vw;
+    align-items: center;
+    justify-content: center;
+    height: 10vh;
+    font-size: 20px;
+
+}
+ul{
+    list-style-type: none;
+    display: flex;
+}
+ul > li > a{
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+}
+ul > li > a:hover{
+    text-decoration: underline;
+    color: red;
+}
+#logo-button{
+    text-decoration: none;
+    color: white;
+}
+#search-area{
+    width: 100%;
+    padding-left: 10vw;
+}
+#search-field{
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    margin-right: 10px;
+    min-width: 60%;
+    max-width: 60%;
+    font-size: 15px;
+}
+#search-field:focus{
+    outline: none;
+}
+form {
+    /*display: flex;*/
+    align-items: center;
+    width: 100%;
+}
