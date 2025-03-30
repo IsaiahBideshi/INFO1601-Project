@@ -1,6 +1,6 @@
 *{
     box-sizing: border-box;
-    font-family: Dosis;
+    font-family: Dosis, sans-serif;
 }
 body{
 
@@ -49,8 +49,10 @@ ul > li > a:hover{
     min-width: 60%;
     max-width: 60%;
     font-size: 15px;
+    transition: border-color 300ms;
 }
 #search-field:focus{
+    border-color: red;
     outline: none;
 }
 #search-form{
