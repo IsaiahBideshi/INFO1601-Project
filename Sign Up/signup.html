@@ -2,11 +2,114 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>CinemaScope | Login</title>
 </head>
-<link rel="stylesheet" href="signup.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../Log%20In/login.css">
+<link rel="stylesheet" href="../navbar.css">
 <body>
+    <nav>
+        <a href="../index.html" id="logo-button">
+            <h1><span style="color: red">Cinema</span>Scope</h1>
+        </a>
+        <div id="home-area">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../Browse/Movies/browseMovies.html">Movies</a></li>
+                <li><a href="../Browse/Shows/browseShows.html">Shows</a></li>
+
+            </ul>
+        </div>
+
+        <div id="search-area">
+            <form id="search-form" action="search.html" method="get" style="margin-left: auto">
+                <input id="search-field" type="text" name="query" placeholder="Search Movie or TV Show" required>
+                <button style="" id="search-btn" type="submit">Search</button>
+            </form>
+        </div>
+
+        <div id="account-area">
+            <ul style="">
+                <li><a href="../Log In/login.html">Login</a></li>
+                <li><a href="../Sign Up/signup.html">SignUp</a></li>
+            </ul>
+        </div>
+    </nav>
 
 
+    <main>
+        <div class="login-container">
+            <div class="login-header">
+                <h1>SIGN UP</h1>
+            </div>
+
+            <div id="errorMessage" class="error-message">Invalid username or password</div>
+
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <input type="text" id="username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="retype_password" placeholder="Re-type Password" required>
+                </div>
+
+                <div class="remember-me">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+
+                <button type="submit" class="login-btn">SIGNUP</button>
+            </form>
+
+            <div class="divider">Or signup with</div>
+
+            <div class="social-login">
+                <button type="button" class="social-btn facebook-btn">
+                    <i class="fab fa-facebook-f"></i>
+                    Facebook
+                </button>
+                <button type="button" class="social-btn google-btn">
+                    <i class="fab fa-google"></i>
+                    Google
+                </button>
+            </div>
+
+            <div class="signup-link">
+                Not a member? <a href="/Sign%20Up/signup.html">Sign up now</a>
+            </div>
+        </div>
+    </main>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const errorMessage = document.getElementById('errorMessage');
+
+
+        if (username === 'bob' && password === 'bobpass') {
+
+            errorMessage.style.display = 'none';
+            //  alert('Login successful! Redirecting...');
+            window.location.href = "index.html";
+        } else {
+
+            errorMessage.style.display = 'block';
+        }
+    });
+</script>
 </body>
+
+
 </html>
