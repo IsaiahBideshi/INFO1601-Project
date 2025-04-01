@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CinemaScope | Browse</title>
+</head>
+
+<!--Code for font-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../../navbar.css">
+<link rel="stylesheet" href="./browse.css">
+<script src="browse%20movies.js"></script>
+
+<body>
+    <nav>
+        <a href="../../index.html" id="logo-button">
+            <h1><span style="color: red">Cinema</span>Scope</h1>
+        </a>
+        <div id="home-area">
+            <ul>
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="#">Movies</a></li>
+                <li><a href="../Shows/browseShows.html">Shows</a></li>
+
+            </ul>
+        </div>
+
+        <div id="search-area">
+            <form id="search-form" action="search.html" method="get" style="margin-left: auto">
+                <input id="search-field" type="text" name="query" placeholder="Search Movie or TV Show" required>
+                <button style="" id="search-btn" type="submit">Search</button>
+            </form>
+        </div>
+
+        <div id="account-area">
+            <ul style="">
+                <li><a href="../../Log%20In/login.html">Login</a></li>
+                <li><a href="../../Sign%20Up/signup.html">SignUp</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="page-buttons top">
+            <button class="page-button prev-page" onclick="prevPage()">Previous</button>
+            <button class="page-button current-page">1</button>
+            <button class="page-button next-page" onclick="nextPage()">Next</button>
+        </div>
+
+        <div id="movies-area">
+            <div style="margin-right: auto; margin-left: auto; font-size: 20px">
+                Loading . . .
+            </div>
+        </div>
+
+        <div class="page-buttons bottom">
+            <button class="page-button prev-page" onclick="prevPage()">Previous</button>
+            <button class="page-button current-page">1</button>
+            <button class="page-button next-page" onclick="nextPage()">Next</button>
+        </div>
+    </main>
+</body>
+</html>
