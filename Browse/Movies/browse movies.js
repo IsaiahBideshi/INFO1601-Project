@@ -23,7 +23,7 @@ async function drawMovies(movies){
                         <img src="${movie.Poster}" alt="${movie.Title}" style="width:100%">
                         <div class="container">
                             <h4><b>${movie.Title}</b></h4>
-                            <p>${movie.Released.split(" ")[2]}</p>
+                            <p>${movie.Year}</p>
                         </div>
                     </div>
                 </a>
