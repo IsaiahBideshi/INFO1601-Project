@@ -1,4 +1,5 @@
 let allMovies = [{}];
+let selectedMovie = {};
 let currentPage = 1;
 let OMDB_API_Key = "c3424a43";
 
@@ -10,20 +11,24 @@ const options = {
     }
 };
 
+function redirectToMovie(movieID) {
+    window.location.href = `../../Movie/Movie.html?MovieID=${movieID}`;
+}
+
 async function drawMovies(movies){
     let moviesArea = document.querySelector("#movies-area");
     let html = ``;
 
     for(let movie of movies) {
-        if(movie.Poster === "N/A" || movie.Response === "False" || movie.Poster === "Not Found") continue;
+        if(movie.poster_path === "N/A") continue;
 
         html += `
-                <a class="movie" href="#">  
+                <a onclick="redirectToMovie('${movie.id}')" class="movie" href="#">  
                     <div class="card">
-                        <img src="${movie.Poster}" alt="${movie.Title}" style="width:100%">
+                        <img src="https://image.tmdb.org/t/p/original${movie.poster_path}" alt="${movie.title}" style="width:100%">
                         <div class="container">
-                            <h4><b>${movie.Title}</b></h4>
-                            <p>${movie.Year}</p>
+                            <h4><b>${movie.title}</b></h4>
+                            <p>${movie.release_date.split("-")[0]}</p>
                         </div>
                     </div>
                 </a>
@@ -37,15 +42,7 @@ async function getMoviesFromPage(page) {
     let TMDBData = await response.json();
 
 
-    let arr = [];
-    if(!allMovies[page]){ // if the page is not already fetched
-        for (let movie of TMDBData.results){
-            let OMDBResponse = await fetch(`https://www.omdbapi.com/?t=${movie.title}&y=${movie.release_date.split("-")[0]}&apikey=${OMDB_API_Key}`);
-            let OMDBData = await OMDBResponse.json();
-            arr.push(OMDBData);
-        }
-        allMovies[page] = arr;
-    }
+    allMovies[page] = TMDBData.results;
 
     console.log(allMovies[page]);
     drawMovies(allMovies[page]);
