@@ -10,6 +10,10 @@ const options = {
     }
 };
 
+function redirectToMovie(showID) {
+    window.location.href = `../../Show/Show.html?ShowID=${showID}`;
+}
+
 async function drawShows(shows){
     let moviesArea = document.querySelector("#movies-area");
     let html = ``;
@@ -18,7 +22,7 @@ async function drawShows(shows){
         if(show.poster_path === "N/A") continue;
 
         html += `
-                <a class="movie" href="#">  
+                <a onclick="redirectToMovie('${show.id}')" class="movie" href="#">  
                     <div class="card">
                         <img src="https://image.tmdb.org/t/p/original${show.poster_path}" alt="${show.name}" style="width:100%">
                         <div class="container">
