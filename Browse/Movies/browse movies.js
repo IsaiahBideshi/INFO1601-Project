@@ -38,11 +38,11 @@ async function drawMovies(movies){
 }
 
 async function getMoviesFromPage(page) {
-    let response = await fetch(`https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`, options);
-    let TMDBData = await response.json();
-
-
-    allMovies[page] = TMDBData.results;
+    if (!allMovies[page]){
+        let response = await fetch(`https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`, options);
+        let TMDBData = await response.json();
+        allMovies[page] = TMDBData.results;
+    }
 
     console.log(allMovies[page]);
     drawMovies(allMovies[page]);

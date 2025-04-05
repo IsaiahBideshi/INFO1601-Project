@@ -15,15 +15,15 @@ async function drawShows(shows){
     let html = ``;
 
     for(let show of shows) {
-        if(show.Poster === "N/A" || show.Response === "False" || show.Poster === "Not Found") continue;
+        if(show.poster_path === "N/A") continue;
 
         html += `
                 <a class="movie" href="#">  
                     <div class="card">
-                        <img src="${show.Poster}" alt="${show.Title}" style="width:100%">
+                        <img src="https://image.tmdb.org/t/p/original${show.poster_path}" alt="${show.name}" style="width:100%">
                         <div class="container">
-                            <h4><b>${show.Title}</b></h4>
-                            <p>${show.Released.split(" ")[2]}</p>
+                            <h4><b>${show.name}</b></h4>
+                            <p>${show.first_air_date.split("-")[0]}</p>
                         </div>
                     </div>
                 </a>
@@ -33,19 +33,12 @@ async function drawShows(shows){
 }
 
 async function getShowsFromPage(page) {
-    let response = await fetch(`https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${page}`, options);
-    let TMDBData = await response.json();
     let arr = [];
     if(!allShows[page]){ // if the page is not already fetched
-        for (let show of TMDBData.results){
-            console.log(show);
-            console.log(`Searching for '${show.name}' from year: ${show.first_air_date.split("-")[0]} `);
-            let OMDBResponse = await fetch(`https://www.omdbapi.com/?t=${show.name}&y=${show.first_air_date.split("-")[0]}&apikey=${OMDB_API_Key}`);
-            let OMDBData = await OMDBResponse.json();
-            arr.push(OMDBData);
-        }
-        console.log(arr);
-        allShows[page] = arr;
+        let response = await fetch(`https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${page}`, options);
+        let TMDBData = await response.json();
+        allShows[page] = TMDBData.results;
+        console.log(allShows[page]);
     }
 
     drawShows(allShows[page]);
