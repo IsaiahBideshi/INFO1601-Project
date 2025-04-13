@@ -4,17 +4,20 @@
 }
 
 #movie-area{
-    display: flex;
+    display: block;
     /*flex-wrap: wrap;*/
     background-color: white;
     padding: 20px;
-    width: 96vw;
+    width: 80vw;
     margin-left: auto;
     margin-right: auto;
     margin-top: 20px;
     margin-bottom: 20px;
     border: 2px solid black;
     border-radius: 10px;
+}
+#detail-area{
+    /*display: flex;*/
 }
 #movie-details{
     display: flex;
@@ -25,4 +28,81 @@
 #movie-details > img{
     border-radius: 10px;
     margin-right: 20px;
+}
+#reviewButton {
+    display: inline-block;
+    margin-top: 1em; /* Adds space above the button */
+    padding: 0.5em 1em;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    border: #060606 solid 1px;
+}
+#reviewButton:hover {
+    background-color: #218838;
+}
+/* Modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.75); /* Black background with opacity */
+    backdrop-filter: blur(5px);
+}
+
+.review-content {
+    background-color: white;
+    margin: 2% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    border-radius: 10px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+}
+
+#submitReviewButton{
+    display: inline-block;
+    margin-top: 1em; /* Adds space above the button */
+    padding: 0.5em 1em;
+    background-color: #00ac1c;
+    color: white;
+    text-decoration: none;
+    border-radius: 3px;
+    text-align: center;
+    border: #060606 solid 1px;
+}
+#submitReviewButton:hover {
+    background-color: #00a61b;
+}
+#movie-name{
+    font-size: large;
+}
+#date{
+    font-size: medium;
+}
+#heartButton{
+    color: #aaaaaa;
+}
+#heartButton:hover {
+    color: #666666;
 }

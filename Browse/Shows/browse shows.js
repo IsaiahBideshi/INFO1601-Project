@@ -39,10 +39,11 @@ async function drawShows(shows){
 async function getShowsFromPage(page) {
     let arr = [];
     if(!allShows[page]){ // if the page is not already fetched
-        let response = await fetch(`https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${page}`, options);
+        let response = await fetch(`https://api.themoviedb.org/3/trending/tv/week?language=en-US&page=${page}`, options);
         let TMDBData = await response.json();
+        console.log(TMDBData);
         allShows[page] = TMDBData.results;
-        console.log(allShows[page]);
+        // console.log(allShows[page]);
     }
 
     drawShows(allShows[page]);
