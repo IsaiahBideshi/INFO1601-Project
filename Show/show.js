@@ -86,6 +86,17 @@ async function getMovieDetails() {
     console.log(OMDBData);
     console.log(TMDBData);
 
+    if (OMDBData.Response === "False") {
+        console.log("OMDB API Error: ", OMDBData.Error);
+        OMDBData = {
+            Genre: "N/A",
+            imdbRating: "N/A",
+            Director: "N/A",
+            Actors: "N/A",
+            Plot: "N/A"
+        };
+    }
+
     let director = "";
     try{
         for (let i = 0; i < TMDBData.created_by.length; i++) {
