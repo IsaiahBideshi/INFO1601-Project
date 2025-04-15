@@ -44,6 +44,24 @@
     </nav>
 
     <main>
+        <div id="filter-area">
+            <form id="filter-form">
+                <label for="sort"><b>Sort by:</b></label>
+                <select id="sort" name="sort">
+                    <option value=""> - </option>
+                    <option value="popularity.desc">Popularity</option>
+                    <option value="vote_count.desc">User Rating</option>
+                </select>
+
+                <label for="genre"><b>Genre:</b></label>
+                <select id="genre" name="genre">
+                    <option value=""> - </option>
+                    <!-- Add more genres here -->
+                </select>
+                <input style="padding: 2px 5px 2px 5px;" class="page-button" type="submit" value="Filter">
+            </form>
+        </div>
+
         <div class="page-buttons top">
             <button class="page-button prev-page" onclick="prevPage()">Previous</button>
             <button class="page-button current-page">1</button>

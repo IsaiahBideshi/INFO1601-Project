@@ -3,6 +3,12 @@ let selectedMovie = {};
 let currentPage = 1;
 let OMDB_API_Key = "c3424a43";
 
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+let genre = urlParams.get("genre");
+let sort = urlParams.get("sort");
+
+
 const options = {
     method: 'GET',
     headers: {
@@ -10,6 +16,33 @@ const options = {
         Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyYWNkZWEwYWE0NWI0YjQ4NzUwNDBlOTFlYTMyNDMzZiIsIm5iZiI6MTc0MzM1NjI1Ny4wMzQsInN1YiI6IjY3ZTk4MTYxNzAwYTZhOTRjNmU1NjFhMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZfUp1LrNIcQ2Q0pIZSYP5P1YgMaksjF50ckc6qoaiBg',
     }
 };
+
+async function populateGenres(genre) {
+    const genreSelect = document.getElementById("genre");
+    try {
+        const response = await fetch('https://api.themoviedb.org/3/genre/movie/list?language=en-US', options);
+        const data = await response.json();
+
+        // Add genres to the dropdown
+        data.genres.forEach(genre => {
+            const option = document.createElement("option");
+            option.value = genre.id;
+            option.textContent = genre.name;
+            genreSelect.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error fetching genres:", error);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        await populateGenres(); // Ensure genres are loaded first
+        getMoviesFromPage(currentPage); // Then load movies
+    } catch (error) {
+        console.error("Error initializing the page:", error);
+    }
+});
 
 function redirectToMovie(movieID) {
     window.location.href = `../../Movie/Movie.html?MovieID=${movieID}`;
@@ -38,10 +71,18 @@ async function drawMovies(movies){
 }
 
 async function getMoviesFromPage(page) {
-    if (!allMovies[page]){
-        let response = await fetch(`https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`, options);
-        let TMDBData = await response.json();
-        allMovies[page] = TMDBData.results;
+    if (!allMovies[page]){ // if the page is not already fetched
+        if(sort || genre) {
+            console.log("!sort && !genre");
+            let response = await fetch(`https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=${sort}&with_genres=${genre}`, options);
+            let TMDBData = await response.json();
+            allMovies[page] = TMDBData.results;
+        }
+        else {
+            let response = await fetch(`https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`, options);
+            let TMDBData = await response.json();
+            allMovies[page] = TMDBData.results;
+        }
     }
 
     console.log(allMovies[page]);
@@ -59,20 +100,10 @@ async function getMoviesFromPage(page) {
 }
 
 function nextPage() {
-    document.querySelector("main").innerHTML = `
-        <div class="page-buttons top">
-            
-        </div>
-
-        <div id="movies-area">
+    document.querySelector("#movies-area").innerHTML = `
             <div style="margin-right: auto; margin-left: auto; font-size: 20px">
                 Loading . . .
             </div>
-        </div>
-
-        <div class="page-buttons bottom">
-            
-        </div>
     `;
     currentPage++;
     getMoviesFromPage(currentPage);
@@ -84,4 +115,3 @@ function prevPage() {
     }
 }
 
-getMoviesFromPage(currentPage);
