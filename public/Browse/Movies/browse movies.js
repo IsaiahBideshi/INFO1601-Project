@@ -1,4 +1,5 @@
-let allShows = [{}];
+let allMovies = [{}];
+let selectedMovie = {};
 let currentPage = 1;
 let OMDB_API_Key = "c3424a43";
 
@@ -6,6 +7,7 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 let genre = urlParams.get("genre");
 let sort = urlParams.get("sort");
+
 
 const options = {
     method: 'GET',
@@ -15,11 +17,10 @@ const options = {
     }
 };
 
-
 async function populateGenres(genre) {
     const genreSelect = document.getElementById("genre");
     try {
-        const response = await fetch('https://api.themoviedb.org/3/genre/tv/list?language=en', options);
+        const response = await fetch('https://api.themoviedb.org/3/genre/movie/list?language=en-US', options);
         const data = await response.json();
 
         // Add genres to the dropdown
@@ -43,24 +44,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
-function redirectToMovie(showID) {
-    window.location.href = `../../Show/Show.html?ShowID=${showID}`;
+function redirectToMovie(movieID) {
+    window.location.href = `../../Movie/Movie.html`;
 }
 
-async function drawShows(shows){
+async function drawMovies(movies){
     let moviesArea = document.querySelector("#movies-area");
     let html = ``;
 
-    for(let show of shows) {
-        if(show.poster_path === "N/A") continue;
+    for(let movie of movies) {
+        if(movie.poster_path === "N/A") continue;
 
         html += `
-                <a onclick="redirectToMovie('${show.id}')" class="movie" href="#">  
+                <a onclick="redirectToMovie('${movie.id}')" class="movie" href="#">  
                     <div class="card">
-                        <img src="https://image.tmdb.org/t/p/original${show.poster_path}" alt="${show.name}" style="width:100%">
+                        <img src="https://image.tmdb.org/t/p/original${movie.poster_path}" alt="${movie.title}" style="width:100%">
                         <div class="container">
-                            <h4><b>${show.name}</b></h4>
-                            <p>${show.first_air_date.split("-")[0]}</p>
+                            <h4><b>${movie.title}</b></h4>
+                            <p>${movie.release_date.split("-")[0]}</p>
                         </div>
                     </div>
                 </a>
@@ -69,25 +70,23 @@ async function drawShows(shows){
     moviesArea.innerHTML = html;
 }
 
-async function getShowsFromPage(page) {
-    let arr = [];
-    if(!allShows[page]){ // if the page is not already fetched
+async function getMoviesFromPage(page) {
+    if (!allMovies[page]){ // if the page is not already fetched
         if(sort || genre) {
-            let response = await fetch(`https://api.themoviedb.org/3/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&with_genres=${genre}&page=${page}&sort_by=${sort}`, options);
+            console.log("!sort && !genre");
+            let response = await fetch(`https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=${sort}&with_genres=${genre}`, options);
             let TMDBData = await response.json();
-            console.log(TMDBData);
-            allShows[page] = TMDBData.results;
+            allMovies[page] = TMDBData.results;
         }
         else {
-            let response = await fetch(`https://api.themoviedb.org/3/trending/tv/week?language=en-US&page=${page}`, options);
+            let response = await fetch(`https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`, options);
             let TMDBData = await response.json();
-            console.log(TMDBData);
-            allShows[page] = TMDBData.results;
+            allMovies[page] = TMDBData.results;
         }
-
     }
 
-    drawShows(allShows[page]);
+    console.log(allMovies[page]);
+    drawMovies(allMovies[page]);
 
     // Change both pages buttons to current page number
     document.querySelector(".bottom").innerHTML = `
@@ -105,17 +104,14 @@ function nextPage() {
             <div style="margin-right: auto; margin-left: auto; font-size: 20px">
                 Loading . . .
             </div>
-
-`;
+    `;
     currentPage++;
-    getShowsFromPage(currentPage);
+    getMoviesFromPage(currentPage);
 }
 function prevPage() {
     if (currentPage > 1) {
         currentPage--;
-        getShowsFromPage(currentPage);
+        getMoviesFromPage(currentPage);
     }
 }
 
-console.log("here");
-getShowsFromPage(currentPage);
