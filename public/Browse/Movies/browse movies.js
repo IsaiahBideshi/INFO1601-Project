@@ -13,7 +13,7 @@ const options = {
     method: 'GET',
     headers: {
         accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyYWNkZWEwYWE0NWI0YjQ4NzUwNDBlOTFlYTMyNDMzZiIsIm5iZiI6MTc0MzM1NjI1Ny4wMzQsInN1YiI6IjY3ZTk4MTYxNzAwYTZhOTRjNmU1NjFhMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZfUp1LrNIcQ2Q0pIZSYP5P1YgMaksjF50ckc6qoaiBg',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyYWNkZWEwYWE0NWI0YjQ4NzUwNDBlOTFlYTMyNDMzZiIsIm5iZiI6MTc0MzM1NjI1Ny4wMzQsInN1YiI6IjY3ZTk4MTYxNzAwYTZhOTRjNmU1NjFhMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZfUp1LrNIcQ2Q0pIZSYP5P1YgMaksjF50ckc6qoaiBg'
     }
 };
 
@@ -45,20 +45,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function redirectToMovie(movieID) {
-    window.location.href = `../../Movie/Movie.html`;
+    window.location.href = `../../Movie/Movie.html?MovieID=${movieID}`;
 }
 
-async function drawMovies(movies){
-    let moviesArea = document.querySelector("#movies-area");
+async function drawMovies(movies, element="#movies-area") {
+    let moviesArea = document.querySelector(element);
     let html = ``;
 
     for(let movie of movies) {
-        if(movie.poster_path === "N/A") continue;
+        let img = `https://image.tmdb.org/t/p/original${movie.poster_path}`;
+        if(movie.poster_path === "N/A" || !movie.poster_path) {
+            img = "../../assets/no-poster-found.png";
+        }
 
         html += `
                 <a onclick="redirectToMovie('${movie.id}')" class="movie" href="#">  
                     <div class="card">
-                        <img src="https://image.tmdb.org/t/p/original${movie.poster_path}" alt="${movie.title}" style="width:100%">
+                        <img src=${img} alt="${movie.title}" style="width:100%">
                         <div class="container">
                             <h4><b>${movie.title}</b></h4>
                             <p>${movie.release_date.split("-")[0]}</p>

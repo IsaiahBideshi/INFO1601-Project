@@ -56,20 +56,6 @@ main{
     outline: none;
 }
 
-.remember-me {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.remember-me input {
-    margin-right: 10px;
-}
-
-.remember-me input {
-    width: 20px;
-}
-
 .login-btn {
     width: 100%;
     padding: 12px;

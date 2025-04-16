@@ -24,6 +24,11 @@ async function addReview(){
     reviewModal.style.overflow = "hidden";
     reviewContent.style.display = "block";
 
+    let img = `https://image.tmdb.org/t/p/original${movieData.poster_path}`;
+    if(movieData.poster_path === "N/A" || !movieData.poster_path) {
+        img = "../assets/no-poster-found.png";
+    }
+
     reviewContent.innerHTML = `
         <span onclick="document.querySelector('#reviewModal').style.display = 'none';" class="close">&times;</span>
         <h1>Add Your Review</h1>
@@ -33,7 +38,7 @@ async function addReview(){
         </span>
         
         <div>
-            <img style="width: 20%; border-radius: 5px" src="https://image.tmdb.org/t/p/original${movieData.poster_path}" alt="">
+            <img style="width: 20%; border-radius: 5px" src=${img} alt="">
         </div>
 
         <textarea id="reviewText" placeholder="Write your review here..." rows="8" style="min-width: 100%; max-width: 100%; margin-top: 10px; overflow: auto;resize: none"></textarea>
@@ -77,6 +82,7 @@ async function addReview(){
 }
 
 async function getMovieDetails() {
+    console.log(movieID)
     let response = await fetch(`https://api.themoviedb.org/3/movie/${movieID}?language=en-US`, options);
     let TMDBData = await response.json();
 
@@ -115,9 +121,14 @@ async function getMovieDetails() {
     console.log(director);
 
     let movieDetails = document.querySelector("#movie-area");
+
+    let img = `https://image.tmdb.org/t/p/original${TMDBData.poster_path}`;
+    if(TMDBData.poster_path === "N/A" || !TMDBData.poster_path) {
+        img = "../assets/no-poster-found.png";
+    }
     let html = `
         <div id="movie-details">
-            <img style="width: 15em;height: 25em" src="https://image.tmdb.org/t/p/original${TMDBData.poster_path}" alt="${TMDBData.title}">
+            <img style="width: 15em;height: 25em" src=${img} alt="${TMDBData.title}">
             <div id="details-area">
                 <h1>${TMDBData.title}</h1>
                 <b>Release Date: </b> ${TMDBData.release_date}<br>

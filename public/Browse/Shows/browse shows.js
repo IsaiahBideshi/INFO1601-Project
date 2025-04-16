@@ -44,20 +44,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function redirectToMovie(showID) {
-    window.location.href = `../../Show/Show.html`;
+    window.location.href = `../../Show/Show.html?ShowID=${showID}`;
 }
 
-async function drawShows(shows){
-    let moviesArea = document.querySelector("#movies-area");
+async function drawShows(shows, element="#movies-area") {
+    let moviesArea = document.querySelector(element);
     let html = ``;
 
     for(let show of shows) {
-        if(show.poster_path === "N/A") continue;
+        let img = `https://image.tmdb.org/t/p/original${show.poster_path}`;
+        if(show.poster_path === "N/A" || !show.poster_path) {
+            img = "../../assets/no-poster-found.png";
+        }
 
         html += `
                 <a onclick="redirectToMovie('${show.id}')" class="movie" href="#">  
                     <div class="card">
-                        <img src="https://image.tmdb.org/t/p/original${show.poster_path}" alt="${show.name}" style="width:100%">
+                        <img src=${img} alt="${show.name}" style="width:100%">
                         <div class="container">
                             <h4><b>${show.name}</b></h4>
                             <p>${show.first_air_date.split("-")[0]}</p>

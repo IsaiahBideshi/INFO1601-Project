@@ -10,6 +10,7 @@
 
 <link rel="stylesheet" href="login.css">
 <link rel="stylesheet" href="../navbar.css">
+<script type="module" src="login.js"></script>
 <body>
     <nav>
         <a href="../index.html" id="logo-button">
@@ -25,7 +26,7 @@
         </div>
 
         <div id="search-area">
-            <form id="search-form" action="search.html" method="get" style="margin-left: auto">
+            <form id="search-form" action="../Search/Search.html" method="get" style="margin-left: auto">
                 <input id="search-field" type="text" name="query" placeholder="Search Movie or TV Show" required>
                 <button style="" id="search-btn" type="submit">Search</button>
             </form>
@@ -54,12 +55,7 @@
                     <input type="password" id="password" placeholder="Password" required>
                 </div>
 
-                <div class="remember-me">
-                    <input type="checkbox" id="remember">
-                    <label for="remember">Remember me</label>
-                </div>
-
-                <button type="submit" class="login-btn">LOGIN</button>
+                <input value="LOGIN" type="submit" class="login-btn"></input>
             </form>
 
             <div class="divider">Or login with</div>
@@ -76,31 +72,10 @@
             </div>
 
             <div class="signup-link">
-                Not a member? <a href="/Sign%20Up/signup.html">Sign up now</a>
+                Not a member? <a href="../Sign%20Up/signup.html">Sign up now</a>
             </div>
         </div>
     </main>
-
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const errorMessage = document.getElementById('errorMessage');
-            
-            
-            if (username === 'bob' && password === 'bobpass') {
-                
-                errorMessage.style.display = 'none';
-              //  alert('Login successful! Redirecting...');
-                 window.location.href = "index.html"; 
-            } else {
-               
-                errorMessage.style.display = 'block';
-            }
-        });
-    </script>
 </body>
 
 

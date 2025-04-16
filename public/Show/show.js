@@ -24,6 +24,11 @@ async function addReview() {
     reviewModal.style.overflow = "hidden";
     reviewContent.style.display = "block";
 
+    let img = `https://image.tmdb.org/t/p/original${showData.poster_path}`;
+    if(showData.poster_path === "N/A" || !showData.poster_path) {
+        img = "../assets/no-poster-found.png";
+    }
+
     reviewContent.innerHTML = `
         <span onclick="document.querySelector('#reviewModal').style.display = 'none';" class="close">&times;</span>
         <h1>Add Your Review</h1>
@@ -33,7 +38,7 @@ async function addReview() {
         </span>
         
         <div>
-            <img style="width: 20%; border-radius: 5px" src="https://image.tmdb.org/t/p/original${showData.poster_path}" alt="">
+            <img style="width: 20%; border-radius: 5px" src=${img} alt="">
         </div>
         
         <textarea id="reviewText" placeholder="Write your review here..." rows="8" style="min-width: 100%; max-width: 100%; margin-top: 10px; overflow: auto;"></textarea>
@@ -121,9 +126,13 @@ async function getMovieDetails() {
 
 
     let movieDetails = document.querySelector("#movie-area");
+    let img = `https://image.tmdb.org/t/p/original${TMDBData.poster_path}`;
+    if(TMDBData.poster_path === "N/A" || !TMDBData.poster_path) {
+        img = "../assets/no-poster-found.png";
+    }
     let html = `
         <div id="movie-details">
-            <img style="width: 15em;height: 25em" src="https://image.tmdb.org/t/p/original${TMDBData.poster_path}" alt="${TMDBData.title}">
+            <img style="width: 15em;height: 25em" src=${img} alt="${TMDBData.title}">
             <div id="details-area">
                 <h1>${TMDBData.name}</h1>
                 <b>Starting Airing: </b> ${TMDBData.first_air_date}<br>

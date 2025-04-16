@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CinemaScope | Home</title>
+</head>
+
+<!--Code for font-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../navbar.css">
+<link rel="stylesheet" href="../Browse/Movies/browse.css">
+<link rel="stylesheet" href="search.css">
+
+<script type="module" src="search.js"></script>
+
+<body>
+<nav>
+    <a href="index.html" id="logo-button">
+        <h1><span style="color: red">Cinema</span>Scope</h1>
+    </a>
+    <div id="home-area">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="../Browse/Movies/browseMovies.html">Movies</a></li>
+            <li><a href="../Browse/Shows/browseShows.html">Shows</a></li>
+
+        </ul>
+    </div>
+
+    <div id="search-area">
+        <form id="search-form" action="Search.html" method="get" style="margin-left: auto">
+            <input id="search-field" type="text" name="query" placeholder="Search Movie or TV Show" required>
+            <button style="" id="search-btn" type="submit">Search</button>
+        </form>
+    </div>
+
+    <div id="account-area">
+        <ul style="">
+            <li><a href="../Log%20In/login.html">Login</a></li>
+            <li><a href="../Sign%20Up/signup.html">SignUp</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+    <div id="search">
+        <h1 id="search-title">Search Results</h1>
+        <div id="search-results">
+            <p id="search-results-text">Results for "<span id="search-query"></span>"</p>
+        </div>
+    </div>
+
+
+    <div class="title">
+        <h1 style="margin: 0">Movies:</h1>
+    </div>
+
+    <div class="page-buttons top movies">
+        <button class="page-button prev-page" onclick="prevPageMovie(event)">Previous</button>
+        <button class="page-button current-page">1</button>
+        <button class="page-button next-page" onclick="nextPageMovie(event)">Next</button>
+    </div>
+
+    <div style="margin-bottom: 2em; flex-wrap: nowrap; overflow-x: scroll;" id="movies-area">
+        <div style="margin-right: auto; margin-left: auto; font-size: 20px">
+            Loading . . .
+        </div>
+    </div>
+
+    <div class="title">
+        <h1 style="margin: 0">Shows:</h1>
+    </div>
+
+    <div class="page-buttons top shows">
+        <button class="page-button prev-page" onclick="prevPageShow(event)">Previous</button>
+        <button class="page-button current-page">1</button>
+        <button class="page-button next-page" onclick="nextPageShow(event)">Next</button>
+    </div>
+
+    <div style="margin-bottom: 2em; flex-wrap: nowrap; overflow-x: scroll;" id="shows-area">
+        <div style="margin-right: auto; margin-left: auto; font-size: 20px">
+            Loading . . .
+        </div>
+    </div>
+
+
+</main>
+</body>
+</html>

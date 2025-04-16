@@ -61,4 +61,3 @@ function createUser(username, email, password) {
             }
         });
 }
-
