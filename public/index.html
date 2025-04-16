@@ -11,8 +11,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="navbar.css">
+<link rel="stylesheet" href="index.css">
 
-<script src="index.js"></script>
+<script type="module" src="index.js"></script>
 
 <body>
     <nav>
@@ -29,9 +30,9 @@
         </div>
 
         <div id="search-area">
-            <form id="search-form" action="search.html" method="get" style="margin-left: auto">
+            <form id="search-form" action="Search/Search.html" method="get" style="margin-left: auto">
                 <input id="search-field" type="text" name="query" placeholder="Search Movie or TV Show" required>
-                <button style="" id="search-btn" type="submit">Search</button>
+                <button id="search-btn" type="submit">Search</button>
             </form>
         </div>
 
@@ -59,12 +60,11 @@
                 </div>
             </div>
             <div class="button-container">
-                <a href="Movie/Movie.html" class="browse-button">Browse movies now</a>
+                <a href="Browse/Movies/browseMovies.html" class="browse-button">Browse movies now</a>
             </div>
         </section>
     
         <style>
-            
             main {
                 background: url('https://png.pngtree.com/background/20230616/original/pngtree-wall-of-movie-posters-on-display-picture-image_3620105.jpg') center/cover no-repeat fixed;
                 padding: 20px 0;
