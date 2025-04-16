@@ -58,6 +58,9 @@
                     <div class="overlay-text">Where stories live forever</div>
                 </div>
             </div>
+            <div class="button-container">
+                <a href="Movie/Movie.html" class="browse-button">Browse movies now</a>
+            </div>
         </section>
 
         
@@ -110,6 +113,33 @@
             .image-container:hover .overlay-text {
                 opacity: 1;
             }
+
+            .button-container {
+            text-align: center; 
+            margin-bottom: 40px; 
+            width: 100%; 
+        }
+
+        
+        .browse-button {
+            display: inline-block; 
+            padding: 12px 30px;
+            background: #e50914;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-family: "Dosis", sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none; 
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .browse-button:hover {
+            background: #b2070f;
+            transform: scale(1.05);
+        }
         </style>
 
     </main>
