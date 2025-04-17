@@ -101,7 +101,7 @@ async function getMoviesFromPage(page) {
             <button class="page-button current-page">${page}</button>
             <button class="page-button next-page" onclick="nextPage()">Next</button>`;
 }
-
+ 
 function nextPage() {
     document.querySelector("#movies-area").innerHTML = `
             <div style="margin-right: auto; margin-left: auto; font-size: 20px">
