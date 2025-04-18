@@ -1,3 +1,8 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+import { getFirestore, addDoc, setDoc, doc, collection } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+import { firebaseConfig } from "../firebaseConfig.js";
+
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
@@ -30,53 +35,103 @@ window.addReview = async function addReview() {
     }
 
     reviewContent.innerHTML = `
-        <span onclick="document.querySelector('#reviewModal').style.display = 'none';" class="close">&times;</span>
-        <h1>Add Your Review</h1>
-
-        <span id="movie-name">
-            <b> ${showData.name} </b> <span id="date">${showData.first_air_date.split("-")[0]}</span>
-        </span>
-        
-        <div>
-            <img style="width: 20%; border-radius: 5px" src=${img} alt="">
-        </div>
-        
-        <textarea id="reviewText" placeholder="Write your review here..." rows="8" style="min-width: 100%; max-width: 100%; margin-top: 10px; overflow: auto;"></textarea>
-        
-        <div style="margin-top: 10px;">
-            <label for="reviewDate"><b>Date Watched:</b></label>
-            <input type="date" id="reviewDate" style="margin-left: 10px;">
-        </div>
-
-        <div style="margin-top: 10px;">
-            <label for="rewatched"><b>Rewatched:</b></label>
-            <input type="checkbox" id="rewatched" style="margin-left: 10px;">
-        </div>
-
-        <div style="margin-top: 10px;">
-            <label for="ratingDropdown"><b>Rating:</b></label>
-            <select id="ratingDropdown" style="margin-left: 10px;">
-                ${Array.from({ length: 10 }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join("")}
-            </select>
-            /10
-        </div>
-        <div style="margin-top: 0; align-items: center; justify-content: center; flex-direction: column;">
-            <span>Did you like the movie?</span>
-            <button id="heartButton" style="background: none; border: none; cursor: pointer; font-size: 30px; color: gray; padding-left: 0;">
-                &#10084;
-            </button>
-        </div>
-        
-
-        <button id="submitReviewButton" style="margin-top: 20px;">Save</button>
+        <form action="#" method="POST" id="reviewForm">
+            <span onclick="document.querySelector('#reviewModal').style.display = 'none';" class="close">&times;</span>
+            <h1>Add Your Review</h1>
+    
+            <span id="movie-name">
+                <b> ${showData.name} </b> <span id="date">${showData.first_air_date.split("-")[0]}</span>
+            </span>
+            
+            <div>
+                <img style="width: 20%; border-radius: 5px" src=${img} alt="">
+            </div>
+            
+            <textarea id="reviewText" placeholder="Write your review here..." rows="8" style="min-width: 100%; max-width: 100%; margin-top: 10px; overflow: auto;"></textarea>
+            
+            <div style="margin-top: 10px;">
+                <label for="reviewDate"><b>Date Watched:</b></label>
+                <input type="date" id="reviewDate" style="margin-left: 10px;">
+            </div>
+    
+            <div style="margin-top: 10px;">
+                <label for="rewatched"><b>Rewatched:</b></label>
+                <input type="checkbox" id="rewatched" style="margin-left: 10px;">
+            </div>
+    
+            <div style="margin-top: 10px;">
+                <label for="ratingDropdown"><b>Rating:</b></label>
+                <select id="ratingDropdown" style="margin-left: 10px;">
+                    ${Array.from({ length: 10 }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join("")}
+                </select>
+                /10
+            </div>
+            <div style="margin-top: 0; align-items: center; justify-content: center; flex-direction: column;">
+                <span>Did you like the movie?</span>
+                <button id="heartButton" style="background: none; border: none; cursor: pointer; font-size: 30px; color: gray; padding-left: 0;">
+                    &#10084;
+                </button>
+            </div>
+            
+    
+            <button type="submit" id="submitReviewButton" style="margin-top: 20px;">Save</button>
+           </form>
     `;
 
     // Add event listener for the heart button
     const heartButton = document.getElementById("heartButton");
     let isHearted = false;
     heartButton.addEventListener("click", () => {
+        event.preventDefault();
         heartButton.style.color = heartButton.style.color === "red" ? "gray" : "red";
         isHearted = !isHearted;
+    });
+
+
+    // Add event listener for the form submission
+    const reviewForm = document.getElementById("reviewForm");
+    reviewForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        let reviewText = document.getElementById("reviewText").value;
+        let reviewDate = document.getElementById("reviewDate").value;
+        let rewatched = document.getElementById("rewatched").checked;
+        let rating = document.getElementById("ratingDropdown").value;
+
+
+        let reviewData = {
+            movieID: showID,
+            reviewText: reviewText,
+            reviewDate: reviewDate,
+            rewatched: rewatched,
+            rating: rating,
+            hearted: isHearted,
+            type: "Show"
+        };
+
+        console.log(reviewData);
+        reviewModal.style.display = "none";
+        document.getElementById("success").style.display = "block";
+
+
+        // Send the review data to a firestore database
+        const app = initializeApp(firebaseConfig);
+        const auth = await getAuth();
+        const db = getFirestore(app);
+
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log(`User is signed in: ${user.uid}`);
+                addDoc(collection(db, "Users", user.uid, "reviews"), reviewData)
+            } else {
+                console.log("No user is signed in.");
+                alert("You must be signed in to submit a review.");
+            }
+        });
+
+        // Check if a document with the same userID already exists
+
     });
 }
 
@@ -85,7 +140,7 @@ async function getMovieDetails() {
     let TMDBData = await response.json();
 
     console.log(`Searching for "${TMDBData.name}" year "${TMDBData.first_air_date.split("-")[0]}"`);
-    response = await fetch(`http://www.omdbapi.com/?apikey=c3424a43&t=${TMDBData.name}`);
+    response = await fetch(`https://www.omdbapi.com/?apikey=c3424a43&t=${TMDBData.name}`);
     let OMDBData = await response.json();
 
     console.log(OMDBData);
@@ -155,11 +210,6 @@ async function getMovieDetails() {
 getMovieDetails();
 
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-import firebaseConfig from "/public/firebaseConfig.js";
-
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
@@ -193,3 +243,9 @@ onAuthStateChanged(auth, (user) => {
         window.location.href = "../Log%20In/login.html"; // Redirect to login page
     }
 });
+
+document.getElementById("success-btn").addEventListener("click", async (event) => {
+    event.preventDefault();
+    document.getElementById("success").style.display = "none";
+    window.location.href = `../Browse/Shows/browseShows.html`;
+})

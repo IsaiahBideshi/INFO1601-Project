@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CinemaScope | Account</title>
+</head>
+
+<!--Code for font-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../navbar.css">
+<link rel="stylesheet" href="../index.css">
+<link rel="stylesheet" href="account.css">
+
+<script type="module" src="../index.js"></script>
+<script type="module" src="../checkAccount.js"></script>
+<script type="module" src="./account.js"></script>
+
+<body>
+    <nav>
+        <a href="../index.html" id="logo-button">
+            <h1><span style="color: red">Cinema</span>Scope</h1>
+        </a>
+        <div id="home-area">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../Browse/Movies/browseMovies.html">Movies</a></li>
+                <li><a href="../Browse/Shows/browseShows.html">Shows</a></li>
+            </ul>
+        </div>
+
+        <div id="search-area">
+            <form id="search-form" action="../Search/Search.html" method="get" style="margin-left: auto">
+                <input id="search-field" type="text" name="query" placeholder="Search Movie or TV Show" required>
+                <button id="search-btn" type="submit">Search</button>
+            </form>
+        </div>
+
+        <div id="account-area">
+
+        </div>
+    </nav>
+
+    <main>
+		<div id="main-area">
+			<div id="tabs">
+				<div class="tab" id="account-tab">
+					<b>My Account</b>
+				</div>
+				<div class="tab" id="reviews-tab">
+                    <b>My Reviews</b>
+				</div>
+			</div>
+
+			<div id="account-info">
+                <h2>Account Information</h2>
+                <p id="account-name"><b>Display Name:</b> <span id="name"></span></p>
+                <p id="account-email"><b>Email:</b> <span id="email"></span></p>
+                <p id="account-password"><b>Password:</b> <span id="password"></span><a id="view-pass" style="text-decoration: none" href="#">&#128274;</a></p>
+				<form action="../Log%20In/login.html">
+					<button id="logout-btn" type="submit">Log Out</button>
+				</form>
+			</div>
+
+			<div id="reviews-info">
+                <h2>My Reviews</h2>
+				<h3>Movies: </h3>
+                <div id="movies-list">
+					<div class="review">
+					</div>
+				</div>
+				<h3>Shows:</h3>
+				<div id="shows-list">
+					<div class="review">
+					</div>
+				</div>
+			</div>
+		</div>
+    </main>
+</body>
+</html>

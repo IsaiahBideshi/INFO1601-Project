@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 
-const firebaseConfig = {
+export const firebaseConfig = {
     apiKey: "AIzaSyCr5Tiiv_6RSHxQ3hLZn6ALxjIUcdsycks",
     authDomain: "cinemascope-d9d8f.firebaseapp.com",
     projectId: "cinemascope-d9d8f",
@@ -12,4 +12,3 @@ const firebaseConfig = {
 
 
 const app = initializeApp(firebaseConfig);
-export default firebaseConfig;

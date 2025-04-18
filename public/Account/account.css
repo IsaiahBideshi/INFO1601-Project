@@ -1,0 +1,91 @@
+#main-area{
+    width: 60vw;
+    margin: 5vh auto 10vh auto;
+    padding:  10px;
+}
+#tabs{
+    display: flex;
+}
+.tab{
+    background-color: whitesmoke;
+    text-align: center;
+    border: 1px solid black;
+    border-bottom: none;
+    border-radius: 5px 5px 0 0;
+    padding: 5px;
+    margin: 0 5px;
+}
+#account-tab{
+    width: 10em;
+}
+.tab:hover{
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+#account-info{
+    border: 1px solid black;
+    padding: 10px;
+    background-color: white;
+}
+#reviews-info{
+    border: 1px solid black;
+    padding: 10px;
+    background-color: white;
+    display: none;
+}
+summary {
+    display: flex;
+    background-color: ghostwhite;
+    border: 2px solid black;
+    align-items: center;
+    gap: 0.5em;
+    cursor: pointer;
+    padding: 0.5em;
+    margin: 0.5em 0.5em 0 0.5em;
+}
+
+/* Add a custom marker if you remove the default one */
+summary::before {
+    content: "▸"; /* Closed triangle */
+    display: inline-block;
+    transform: rotate(0deg);
+    transition: transform 0.2s ease;
+    margin-right: 0.5em;
+}
+details[open] summary{
+    border-bottom: none;
+}
+
+details[open] summary::before {
+    content: "▾"; /* Open triangle */
+}
+.review-content{
+    padding: 2em;
+    background-color: ghostwhite;
+    border: 2px solid black;
+    border-top: none;
+    margin: 0 0.5em 0 0.5em;
+
+}
+#movies-list{
+    border: 2px solid black;
+    max-height: 100vh;
+    overflow-y: scroll;
+    padding-bottom: 0.5em;
+}
+#shows-list{
+    border: 2px solid black;
+    max-height: 100vh;
+    overflow-y: scroll;
+    padding-bottom: 0.5em;
+}
+#logout-btn{
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: black;
+    transition: background-color 0.3s, color 0.3s;
+}

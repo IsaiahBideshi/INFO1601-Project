@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>CinemaScope | Movie</title>
+	<meta charset="UTF-8">
+	<title>CinemaScope | Movie</title>
 </head>
 <!--Code for font-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,45 +14,52 @@
 <link rel="stylesheet" href="../index.css">
 
 <script type="module" src="show.js"></script>
+<script type="module" src="../checkAccount.js"></script>
 
 <body>
 <nav>
-  <a href="index.html" id="logo-button">
-    <h1><span style="color: red">Cinema</span>Scope</h1>
-  </a>
-  <div id="home-area">
-    <ul>
-      <li><a href="../index.html">Home</a></li>
-      <li><a href="../Browse/Movies/browseMovies.html">Movies</a></li>
-      <li><a href="../Browse/Shows/browseShows.html">Shows</a></li>
+	<a href="../index.html" id="logo-button">
+		<h1><span style="color: red">Cinema</span>Scope</h1>
+	</a>
+	<div id="home-area">
+		<ul>
+			<li><a href="../index.html">Home</a></li>
+			<li><a href="../Browse/Movies/browseMovies.html">Movies</a></li>
+			<li><a href="../Browse/Shows/browseShows.html">Shows</a></li>
 
-    </ul>
-  </div>
+		</ul>
+	</div>
 
-  <div id="search-area">
-    <form id="search-form" action="../Search/Search.html" method="get" style="margin-left: auto">
-      <input id="search-field" type="text" name="query" placeholder="Search Movie or TV Show" required>
-      <button style="" id="search-btn" type="submit">Search</button>
-    </form>
-  </div>
+	<div id="search-area">
+		<form id="search-form" action="../Search/Search.html" method="get" style="margin-left: auto">
+			<input id="search-field" type="text" name="query" placeholder="Search Movie or TV Show" required>
+			<button style="" id="search-btn" type="submit">Search</button>
+		</form>
+	</div>
 
-  <div id="account-area">
-    <ul style="">
-      <li><a href="../Log%20InIn/login.html">Login</a></li>
-      <li><a href="../Sign%20UpUp/signup.html">SignUp</a></li>
-    </ul>
-  </div>
+	<div id="account-area">
+
+	</div>
 </nav>
 
 <main>
-  <div id="movie-area">
-    LOADING . . .
-  </div>
-  <div id="reviewModal" class="modal">
-    <div class="review-content">
+	<div id="movie-area">
+		LOADING . . .
+	</div>
 
-    </div>
-  </div>
+	<div id="reviewModal" class="modal">
+		<div class="review-content">
+
+		</div>
+	</div>
+
+	<div id="success">
+		<div id="success-container">
+			<h1>Review Added Successfully</h1>
+			<p>You can check your account and see the review there.</p>
+			<button class="page-button" id="success-btn" type="button">OK</button>
+		</div>
+	</div>
 </main>
 </body>
 </html>

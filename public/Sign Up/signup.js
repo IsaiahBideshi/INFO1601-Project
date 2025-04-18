@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-import firebaseConfig from "../firebaseConfig.js";
+import { getAuth, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+import { firebaseConfig } from "../firebaseConfig.js";
 
 console.log("hello");
 
@@ -59,5 +59,27 @@ function createUser(username, email, password) {
                 errorMessageBox.textContent = "Email Already In Use";
                 errorMessageBox.style.display = 'block';
             }
+        });
+}
+
+window.signUpWithGoogle = async function signUpWithGoogle(){
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+        .then(async (result) => {
+            const user = result.user;
+            console.log(user);
+            document.getElementById('success').style.display = 'block';
+            const db = getFirestore(app);
+
+            const userDocRef = doc(db, "Users", user.uid);
+
+            await setDoc(userDocRef, {
+                displayName: user.displayName,
+                email: user.email,
+                password: "Signed in with Google"
+            });
+        })
+        .catch((error) => {
+            console.error("Error signing in with Google: ", error);
         });
 }

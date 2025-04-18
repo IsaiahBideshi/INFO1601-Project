@@ -1,3 +1,9 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+import { getFirestore, addDoc, setDoc, doc, collection } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+import { firebaseConfig } from "../firebaseConfig.js";
+
+
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
@@ -16,7 +22,6 @@ window.addReview = async function addReview(){
 
     let movieData = await fetch(`https://api.themoviedb.org/3/movie/${movieID}?language=en-US`, options);
     movieData = await movieData.json();
-    console.log(movieData);
 
     let reviewModal = document.querySelector("#reviewModal");
     let reviewContent = document.querySelector(".review-content");
@@ -30,6 +35,7 @@ window.addReview = async function addReview(){
     }
 
     reviewContent.innerHTML = `
+    <form action="#" method="POST" id="reviewForm">
         <span onclick="document.querySelector('#reviewModal').style.display = 'none';" class="close">&times;</span>
         <h1>Add Your Review</h1>
         
@@ -45,7 +51,7 @@ window.addReview = async function addReview(){
         
         <div style="margin-top: 10px;">
             <label for="reviewDate"><b>Date Watched:</b></label>
-            <input type="date" id="reviewDate" style="margin-left: 10px;">
+            <input type="date" id="reviewDate" style="margin-left: 10px;" required>
         </div>
 
         <div style="margin-top: 10px;">
@@ -68,30 +74,73 @@ window.addReview = async function addReview(){
             <span>Did you like the movie?</span>
         </div>
         
-
-        <button id="submitReviewButton" style="margin-top: 20px;">Save</button>
+        <button type="submit" id="submitReviewButton" style="margin-top: 20px;">Save</button>
+    </form>
     `;
 
     // Add event listener for the heart button
     const heartButton = document.getElementById("heartButton");
     let isHearted = false;
     heartButton.addEventListener("click", () => {
+        event.preventDefault();
         heartButton.style.color = heartButton.style.color === "red" ? "gray" : "red";
         isHearted = !isHearted;
     });
-}
 
+    // Add event listener for the form submission
+    const reviewForm = document.getElementById("reviewForm");
+    reviewForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        let reviewText = document.getElementById("reviewText").value;
+        let reviewDate = document.getElementById("reviewDate").value;
+        let rewatched = document.getElementById("rewatched").checked;
+        let rating = document.getElementById("ratingDropdown").value;
+
+
+        let reviewData = {
+            movieID: movieID,
+            reviewText: reviewText,
+            reviewDate: reviewDate,
+            rewatched: rewatched,
+            rating: rating,
+            hearted: isHearted,
+            type: "Movie"
+        };
+
+        console.log(reviewData);
+        reviewModal.style.display = "none";
+        document.getElementById("success").style.display = "block";
+
+        // Send the review data to a firestore database
+        const app = initializeApp(firebaseConfig);
+        const auth = await getAuth();
+        const db = getFirestore(app);
+
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log(`User is signed in: ${user.uid}`);
+                addDoc(collection(db, "Users", user.uid, "reviews"), reviewData)
+            } else {
+                console.log("No user is signed in.");
+                alert("You must be signed in to submit a review.");
+            }
+        });
+
+        // Check if a document with the same userID already exists
+
+    });
+}
 async function getMovieDetails() {
-    console.log(movieID)
+
     let response = await fetch(`https://api.themoviedb.org/3/movie/${movieID}?language=en-US`, options);
     let TMDBData = await response.json();
 
-    response = await fetch(`http://www.omdbapi.com/?apikey=c3424a43&i=${TMDBData.imdb_id}`);
+    response = await fetch(`https://www.omdbapi.com/?apikey=c3424a43&i=${TMDBData.imdb_id}`);
 
     let OMDBData = await response.json();
 
-    console.log(TMDBData);
-    console.log(OMDBData);
 
     if (OMDBData.Response === "False") {
         console.log("OMDB API Error: ", OMDBData.Error);
@@ -118,7 +167,6 @@ async function getMovieDetails() {
         director = OMDBData.Director;
     }
 
-    console.log(director);
 
     let movieDetails = document.querySelector("#movie-area");
 
@@ -150,43 +198,8 @@ async function getMovieDetails() {
 
 getMovieDetails();
 
-
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-import firebaseConfig from "/public/firebaseConfig.js";
-
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth();
-
-window.showAcc = function showAcc(){
-    let accountArea = document.querySelector(".dropdown-content");
-    accountArea.style.display = "block";
-}
-
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        // User is logged in
-        console.log("User is logged in:", user);
-        console.log("User ID:", user.uid);
-        console.log("User Email:", user.email);
-        let accountArea = document.getElementById("account-area");
-        accountArea.innerHTML = `
-                    <div class="dropdown">
-                        <img style="width: 1.5em; min-height: 1.5em" src="../assets/account-icon.png" alt="Account Icon">
-                        <div class="dropdown-content">
-                            <a href="#">Account</a>
-                            <a href="#">Log Out</a>
-                        </div>
-                    </div>
-        `;
-
-        // Access user-specific data or allow access to the page
-    } else {
-        // No user is logged in
-        console.log("No user is logged in. Redirecting to login page...");
-        window.location.href = "../Log%20In/login.html"; // Redirect to login page
-    }
-});
+document.getElementById("success-btn").addEventListener("click", async (event) => {
+    event.preventDefault();
+    document.getElementById("success").style.display = "none";
+    window.location.href = `../Browse/Movies/browseMovies.html`;
+})
