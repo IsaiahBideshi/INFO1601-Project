@@ -89,3 +89,22 @@ details[open] summary::before {
     color: black;
     transition: background-color 0.3s, color 0.3s;
 }
+#logout-btn:hover{
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+.delete-btn {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: black;
+    transition: background-color 0.3s, color 0.3s;
+}
+.delete-btn:hover {
+    background-color: darkred;
+    color: white;
+    cursor: pointer;
+}
