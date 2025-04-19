@@ -52,9 +52,11 @@ img {
 .page-buttons{
     display: flex;
     justify-content: center;
+    margin-bottom: 2em;
 }
-#page-buttons-bottom{
-    margin-bottom: 5em;
+#footer{
+    height: 2em;
+    background-color:  gainsboro;
 }
 .bottom{
     margin-bottom: 5em;

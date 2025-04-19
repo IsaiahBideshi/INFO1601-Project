@@ -18,10 +18,10 @@ const searchQuery = urlParams.get('query');
 document.querySelector("#search-query").innerHTML = searchQuery;
 
 function redirectToMovie(movieID){
-    window.location.href = `../../Movie/Movie.html?MovieID=${movieID}`;
+    window.location.href = `../Movie/Movie.html?MovieID=${movieID}`;
 }
 function redirectToShow(showID){
-    window.location.href = `../../Show/Show.html?ShowID=${showID}`;
+    window.location.href = `../Show/Show.html?ShowID=${showID}`;
 }
 
 function drawData(data, element, type) {
@@ -36,7 +36,7 @@ function drawData(data, element, type) {
 
         if (type === "movie" && movie.release_date) {
             html += `
-                    <a onclick="window.location.href = '../../public/Movie/Movie.html?MovieID=${movie.id}'" class="movie" href="#">  
+                    <a onclick="window.location.href = '../Movie/Movie.html?MovieID=${movie.id}'" class="movie" href="#">  
                         <div class="card">
                             <img src=${img} alt="${movie.title}" style="width:100%">
                             <div class="container">
@@ -48,7 +48,7 @@ function drawData(data, element, type) {
             `;
         } else if (type === "tv" && movie.first_air_date) {
             html += `
-                <a onclick="window.location.href = '../../public/Show/Show.html?ShowID=${movie.id}'" class="movie" href="#">  
+                <a onclick="window.location.href = '../Show/Show.html?ShowID=${movie.id}'" class="movie" href="#">  
                     <div class="card">
                         <img src=${img} alt="${movie.name}" style="width:100%">
                         <div class="container">

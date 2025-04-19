@@ -53,10 +53,10 @@ async function drawMovies(movies, element="#movies-area") {
     let html = ``;
 
     for(let movie of movies) {
-        let img = `https://image.tmdb.org/t/p/original${movie.poster_path}`;
         if(movie.poster_path === "N/A" || !movie.poster_path) {
             img = "../../assets/no-poster-found.png";
         }
+        let img = `https://image.tmdb.org/t/p/original${movie.poster_path}`;
 
         html += `
                 <a onclick="redirectToMovie('${movie.id}')" class="movie" href="#">  

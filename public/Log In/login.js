@@ -7,6 +7,26 @@ import { getFirestore, collection, setDoc, doc } from "https://www.gstatic.com/f
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
+window.checkForBob = async function checkForBob(email, password){
+    if (email === "bob" && password === "bobpass") {
+        const userCredential = await signInWithEmailAndPassword(auth, "bob@mail.com", password);
+        const user = userCredential.user;
+
+        console.log("Login successful:", user);
+        window.location.href = "../index.html";
+
+        const db = getFirestore(app);
+        const userDocRef = doc(db, "Users", user.uid);
+
+        await setDoc(userDocRef, {
+            displayName: user.displayName,
+            email: user.email,
+            password: password // Avoid storing plain text passwords in production
+        });
+        window.location.href = "../index.html"; // Redirect to the home page
+    }
+}
+
 // Handle login form submission
 document.getElementById("loginForm").addEventListener("submit", async function (e) {
     e.preventDefault(); // Prevent default form submission
@@ -32,12 +52,14 @@ document.getElementById("loginForm").addEventListener("submit", async function (
             email: user.email,
             password: password // Avoid storing plain text passwords in production
         });
+        window.location.href = "../index.html"; // Redirect to the home page
+
 
         // Redirect to the home page
-        window.location.href = "../index.html";
     } catch (error) {
+        await checkForBob(email, password);
         // Handle errors
-        console.error("Login error:", error);
+        console.error("Login error:", error.code);
         errorMessageBox.style.display = "block";
 
         if (error.code === "auth/user-not-found") {
@@ -46,6 +68,8 @@ document.getElementById("loginForm").addEventListener("submit", async function (
             errorMessageBox.textContent = "Incorrect password. Please try again.";
         } else if (error.code === "auth/invalid-login-credentials") {
             errorMessageBox.textContent = "Invalid login credentials. Please try again.";
+        } else if (error.code === "auth/invalid-email") {
+            errorMessageBox.textContent = "Invalid email. Please try again.";
         } else {
             errorMessageBox.textContent = "An error occurred. Please try again later.";
         }

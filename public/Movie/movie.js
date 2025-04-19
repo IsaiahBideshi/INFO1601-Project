@@ -136,6 +136,7 @@ async function getMovieDetails() {
 
     let response = await fetch(`https://api.themoviedb.org/3/movie/${movieID}?language=en-US`, options);
     let TMDBData = await response.json();
+    console.log(TMDBData);
 
     response = await fetch(`https://www.omdbapi.com/?apikey=c3424a43&i=${TMDBData.imdb_id}`);
 
